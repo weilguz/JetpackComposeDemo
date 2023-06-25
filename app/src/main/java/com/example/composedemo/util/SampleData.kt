@@ -17,7 +17,7 @@ object SampleData {
             for (i in 0..length){
                 msgContent += "bbbbbbbbbbbbbbbbbbb,"
             }
-            messageList.add(Message("name$it","message: $msgContent"))
+            messageList.add(Message("name$it",msgContent))
         }
         return messageList
     }

@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,7 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -50,17 +51,19 @@ fun Greeting(msg: Message) {
                 .border(1.5.dp, MaterialTheme.colors.primary, CircleShape),//设置图片的边框
             contentDescription = "这是图片")
         Spacer(modifier = Modifier.width(8.dp))
-        Column { //垂直排列元素
+        var isExpanded by remember { mutableStateOf(false) }
+        Column (modifier = Modifier.clickable { isExpanded = !isExpanded }){ //垂直排列元素
             Text(text = msg.name)
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
-                Text(text = msg.msg, modifier = Modifier.padding(all = 4.dp))
+                Text(text = msg.msg, modifier = Modifier.padding(all = 4.dp), maxLines = if (isExpanded) Int.MAX_VALUE else 1)
             }
         }
     }
 }
+
 //Column 垂直排列
 //Row 水平排列
 //Box 堆叠元素
@@ -68,6 +71,7 @@ fun Greeting(msg: Message) {
 //Surface 将Text封装在Surface中，可以自定义Text的形状和阴影等
 //LazyColumn 垂直列表
 //LazyRow 水平列表
+//使用remember和mutableStateOf函数 remember将本地状态存储在内存中，并跟踪传递给mutableStateOf的值的变化
 
 @Preview(showBackground = true) //浅色主题预览可组合函数
 @Preview( //浅色主题预览可组合函数
