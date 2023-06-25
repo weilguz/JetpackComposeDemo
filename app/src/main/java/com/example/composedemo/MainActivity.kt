@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -39,8 +40,9 @@ fun Greeting(name: String) {
     Row (modifier = Modifier.padding(all = 8.dp)) { //水平排列各项
         Image(painter = painterResource(id = R.drawable.ic_launcher_background),
             modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape), //设置图片的大小，形状
+                .size(40.dp)//设置图片的大小
+                .clip(CircleShape)//设置图片的形状
+                .border(1.5.dp, MaterialTheme.colors.primary, CircleShape),//设置图片的边框
             contentDescription = "这是图片")
         Spacer(modifier = Modifier.width(8.dp))
         Column { //垂直排列元素
