@@ -1,5 +1,6 @@
 package com.example.composedemo
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -62,7 +63,12 @@ fun Greeting(name: String) {
 //Modifier 可以更改大小，布局，外观，还可以添加互动如点击
 //Surface 将Text封装在Surface中，可以自定义Text的形状和阴影等
 
-@Preview(showBackground = true) //预览可组合函数
+@Preview(showBackground = true) //浅色主题预览可组合函数
+@Preview( //深色主题预览可组合函数
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "1234"
+)
 @Composable
 fun DefaultPreview() {
     ComposeDemoTheme {
