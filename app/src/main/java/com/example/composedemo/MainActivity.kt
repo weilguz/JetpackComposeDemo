@@ -50,7 +50,9 @@ fun Greeting(name: String) {
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            Text(text = "Hello aaaaaaaaaaaaaaa!")
+            Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
+                Text(text = "Hello aaaaaaaaaaaaaaa!", modifier = Modifier.padding(all = 4.dp))
+            }
         }
     }
 }
@@ -58,6 +60,7 @@ fun Greeting(name: String) {
 //Row 水平排列
 //Box 堆叠元素
 //Modifier 可以更改大小，布局，外观，还可以添加互动如点击
+//Surface 将Text封装在Surface中，可以自定义Text的形状和阴影等
 
 @Preview(showBackground = true) //预览可组合函数
 @Composable
