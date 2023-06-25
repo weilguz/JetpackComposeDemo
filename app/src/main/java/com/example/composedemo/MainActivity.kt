@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -17,7 +19,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.composedemo.bean.Message
 import com.example.composedemo.ui.theme.ComposeDemoTheme
+import com.example.composedemo.util.SampleData
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    MsgList(SampleData.conversationSample())
                 }
             }
         }
@@ -37,7 +41,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable //可组合函数
-fun Greeting(name: String) {
+fun Greeting(msg: Message) {
     Row (modifier = Modifier.padding(all = 8.dp)) { //水平排列各项
         Image(painter = painterResource(id = R.drawable.ic_launcher_background),
             modifier = Modifier
@@ -47,12 +51,12 @@ fun Greeting(name: String) {
             contentDescription = "这是图片")
         Spacer(modifier = Modifier.width(8.dp))
         Column { //垂直排列元素
-            Text(text = "Hello $name!")
+            Text(text = msg.name)
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
-                Text(text = "Hello aaaaaaaaaaaaaaa!", modifier = Modifier.padding(all = 4.dp))
+                Text(text = msg.msg, modifier = Modifier.padding(all = 4.dp))
             }
         }
     }
@@ -62,9 +66,11 @@ fun Greeting(name: String) {
 //Box 堆叠元素
 //Modifier 可以更改大小，布局，外观，还可以添加互动如点击
 //Surface 将Text封装在Surface中，可以自定义Text的形状和阴影等
+//LazyColumn 垂直列表
+//LazyRow 水平列表
 
 @Preview(showBackground = true) //浅色主题预览可组合函数
-@Preview( //深色主题预览可组合函数
+@Preview( //浅色主题预览可组合函数
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true,
     name = "1234"
@@ -76,7 +82,16 @@ fun DefaultPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            Greeting("Android")
+            MsgList(SampleData.conversationSample())
+        }
+    }
+}
+
+@Composable
+fun MsgList(messageList: List<Message>){
+    LazyColumn {
+        items(messageList) {msg ->
+            Greeting(msg)
         }
     }
 }
