@@ -139,7 +139,6 @@ fun OtherItem(msg: Message){ //添加ConstraintLayout
         })
         Button(onClick = { }, modifier = Modifier.constrainAs(button){
             centerVerticallyTo(parent)
-            start.linkTo(uMsg.end)
             end.linkTo(parent.end, margin = 12.dp)
         }) {
             Text(text = "Button")
