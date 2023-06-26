@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -21,6 +22,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.composedemo.bean.Message
 import com.example.composedemo.ui.theme.ComposeDemoTheme
 import com.example.composedemo.util.SampleData
@@ -98,7 +102,47 @@ fun DefaultPreview() {
 fun MsgList(messageList: List<Message>){
     LazyColumn {
         items(messageList) {msg ->
-            Greeting(msg)
+            if (msg.id % 2 == 0){
+                Greeting(msg)
+            }else{
+                OtherItem(msg)
+            }
+        }
+    }
+}
+
+@Composable
+fun OtherItem(msg: Message){ //添加ConstraintLayout
+    ConstraintLayout (modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)){
+        val (img,name,uMsg,button) = createRefs()
+        //val myHorizontalChain = createHorizontalChain(uMsg,button, chainStyle = ChainStyle.Spread)
+        createVerticalChain(name,uMsg, chainStyle = ChainStyle.Packed)
+
+        Image(painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "这是图片",modifier = Modifier
+            .size(40.dp)//设置图片的大小
+            .clip(CircleShape)//设置图片的形状
+            .border(1.5.dp, MaterialTheme.colors.primary, CircleShape)
+            .constrainAs(img) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start, margin = 12.dp)
+            })//设置图片的边框
+        Text(text = msg.name, modifier = Modifier.constrainAs(name) {
+            top.linkTo(img.top)
+            start.linkTo(img.end, margin = 10.dp)
+        })
+        Text(text = msg.msg, modifier = Modifier.constrainAs(uMsg) {
+            top.linkTo(name.bottom)
+            bottom.linkTo(parent.bottom)
+            linkTo(start = name.start, end = button.start, endMargin = 10.dp,bias = 0f)
+            width = Dimension.preferredWrapContent
+            height = Dimension.preferredWrapContent
+        })
+        Button(onClick = { }, modifier = Modifier.constrainAs(button){
+            centerVerticallyTo(parent)
+            start.linkTo(uMsg.end)
+            end.linkTo(parent.end, margin = 12.dp)
+        }) {
+            Text(text = "Button")
         }
     }
 }

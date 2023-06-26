@@ -11,13 +11,13 @@ object SampleData {
 
     fun conversationSample(): List<Message>{
         val messageList = arrayListOf<Message>()
-        (0..10).forEach {
+        (0..20).forEach {
             var msgContent = "aaaaaaaaaaaaaaaaaaaa,"
-            val length: Int = (1..10).random()
+            /*val length: Int = (1..10).random()
             for (i in 0..length){
                 msgContent += "bbbbbbbbbbbbbbbbbbb,"
-            }
-            messageList.add(Message("name$it",msgContent))
+            }*/
+            messageList.add(Message(it,"name$it",msgContent))
         }
         return messageList
     }
