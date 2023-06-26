@@ -15,6 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -43,7 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable //可组合函数
 fun Greeting(msg: Message) {
-    Row (modifier = Modifier.padding(all = 8.dp)) { //水平排列各项
+    Row (modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start) { //水平排列各项
         Image(painter = painterResource(id = R.drawable.ic_launcher_background),
             modifier = Modifier
                 .size(40.dp)//设置图片的大小
@@ -52,7 +53,7 @@ fun Greeting(msg: Message) {
             contentDescription = "这是图片")
         Spacer(modifier = Modifier.width(8.dp))
         var isExpanded by remember { mutableStateOf(false) }
-        Column (modifier = Modifier.clickable { isExpanded = !isExpanded }){ //垂直排列元素
+        Column (modifier = Modifier.clickable { isExpanded = !isExpanded }, verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start){ //垂直排列元素
             Text(text = msg.name)
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -72,6 +73,8 @@ fun Greeting(msg: Message) {
 //LazyColumn 垂直列表
 //LazyRow 水平列表
 //使用remember和mutableStateOf函数 remember将本地状态存储在内存中，并跟踪传递给mutableStateOf的值的变化
+//Row 可以使用horizontalArrangement和verticalAlignment 参数设置子项位置及对齐方式
+//Column 可以使用verticalArrangement和horizontalAlignment 参数设置子项位置及对齐方式
 
 @Preview(showBackground = true) //浅色主题预览可组合函数
 @Preview( //浅色主题预览可组合函数
